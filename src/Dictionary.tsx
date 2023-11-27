@@ -47,23 +47,29 @@ function Dictionary() {
             ))}
 
           {wordData.meanings &&
-            wordData.meanings.map((meaning: any, index: number) => (
+            wordData.meanings.slice(0, 5).map((meaning: any, index: number) => (
               <div key={index}>
                 <h3>{meaning.partOfSpeech}</h3>
                 {meaning.definitions &&
-                  meaning.definitions.map(
-                    (definition: any, subIndex: number) => (
+                  meaning.definitions
+                    .slice(0, 5)
+                    .map((definition: any, subIndex: number) => (
                       <div key={subIndex}>
                         <p>{definition.definition}</p>
                         {definition.synonyms.length > 0 && (
-                          <p>Synonyms: {definition.synonyms.join(", ")}</p>
+                          <p>
+                            Synonyms:{" "}
+                            {definition.synonyms.slice(0, 5).join(", ")}
+                          </p>
                         )}
                         {definition.antonyms.length > 0 && (
-                          <p>Antonyms: {definition.antonyms.join(", ")}</p>
+                          <p>
+                            Antonyms:{" "}
+                            {definition.antonyms.slice(0, 5).join(", ")}
+                          </p>
                         )}
                       </div>
-                    )
-                  )}
+                    ))}
               </div>
             ))}
         </div>
