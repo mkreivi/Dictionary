@@ -40,7 +40,7 @@ function Dictionary() {
                 {phonetic.text && <p>{phonetic.text}</p>}
                 {phonetic.audio && (
                   <audio controls>
-                    <source src={phonetic.audio[0]} type="audio/mpeg" />
+                    <source src={phonetic.audio} type="audio/mpeg" />
                   </audio>
                 )}
               </div>
