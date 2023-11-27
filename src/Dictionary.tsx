@@ -4,13 +4,20 @@ import useApiService from "./apiService";
 function Dictionary() {
   const [word, setWord] = useState<string>("");
   const { wordData, fetchDefinition } = useApiService();
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWord(e.target.value);
   };
 
-  const handleSearch = () => {
-    fetchDefinition(word);
+  const handleSearch = async () => {
+    try {
+      setError(null); // Clear previous errors
+      await fetchDefinition(word);
+    } catch (error: any) {
+      console.error("Error in Dictionary component:", error);
+      setError(error.message || "Failed to fetch definition");
+    }
   };
 
   return (
@@ -22,6 +29,7 @@ function Dictionary() {
         onChange={handleInputChange}
       />
       <button onClick={handleSearch}>Search</button>
+      {error && <div style={{ color: "red" }}>{error}</div>}
 
       {wordData && (
         <div>
