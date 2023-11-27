@@ -1,15 +1,13 @@
-import { useState } from "react";
 import "./App.css";
+import Dictionary from "./Dictionary";
 import Header from "./components/header";
-import Search from "./search";
+//import Search from "./search";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div>
       <Header />
-      <Search />
+      <Dictionary />
     </div>
   );
 }
