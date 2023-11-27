@@ -14,8 +14,7 @@ function useApiService() {
         throw new Error(`Failed to fetch definition for ${word}`);
       }
       const data = await response.json();
-      setWordData(data);
-      return data;
+      setWordData(data[0] || null);
     } catch (error) {
       console.error("Error fetching definition:", error);
       throw error;

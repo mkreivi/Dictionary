@@ -9,13 +9,8 @@ function Dictionary() {
     setWord(e.target.value);
   };
 
-  const handleSearch = async () => {
-    try {
-      const data = await fetchDefinition(word);
-      console.log("Definition fetched:", data);
-    } catch (error) {
-      console.error("Error fetching definition:", error);
-    }
+  const handleSearch = () => {
+    fetchDefinition(word);
   };
 
   return (
@@ -30,7 +25,39 @@ function Dictionary() {
 
       {wordData && (
         <div>
-          <h2>{wordData[0]?.word}</h2>
+          <h2>{wordData.word}</h2>
+          {wordData.phonetics &&
+            wordData.phonetics.map((phonetic: any, index: number) => (
+              <div key={index}>
+                {phonetic.text && <p>{phonetic.text}</p>}
+                {phonetic.audio && (
+                  <audio controls>
+                    <source src={phonetic.audio} type="audio/mpeg" />
+                  </audio>
+                )}
+              </div>
+            ))}
+
+          {wordData.meanings &&
+            wordData.meanings.map((meaning: any, index: number) => (
+              <div key={index}>
+                <h3>{meaning.partOfSpeech}</h3>
+                {meaning.definitions &&
+                  meaning.definitions.map(
+                    (definition: any, subIndex: number) => (
+                      <div key={subIndex}>
+                        <p>{definition.definition}</p>
+                        {definition.synonyms.length > 0 && (
+                          <p>Synonyms: {definition.synonyms.join(", ")}</p>
+                        )}
+                        {definition.antonyms.length > 0 && (
+                          <p>Antonyms: {definition.antonyms.join(", ")}</p>
+                        )}
+                      </div>
+                    )
+                  )}
+              </div>
+            ))}
         </div>
       )}
     </div>
