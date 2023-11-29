@@ -79,6 +79,9 @@ function Dictionary() {
                     .map((definition: any, subIndex: number) => (
                       <div key={subIndex}>
                         <p>{definition.definition}</p>
+                        {definition.example && (
+                          <p>Example: {definition.example}</p>
+                        )}
                         {definition.synonyms.length > 0 && (
                           <p>
                             Synonyms:{" "}
