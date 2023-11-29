@@ -1,29 +1,49 @@
-import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Dictionary from "./Dictionary";
 
-describe("Dictionary component", () => {
-  it("renders input field correctly", () => {
-    render(<Dictionary />);
+test("renders input field", () => {
+  render(<Dictionary />);
+  const inputElement = screen.getByPlaceholderText("Enter a word");
+  expect(inputElement).toBeInTheDocument();
+});
 
-    const inputElement = screen.getByPlaceholderText(
-      "Enter a word"
-    ) as HTMLInputElement;
+test("fetches data when the button is clicked", async () => {
+  render(<Dictionary />);
+  const inputElement = screen.getByPlaceholderText("Enter a word");
+  const buttonElement = screen.getByText("Search");
 
-    expect(inputElement).toBeInTheDocument();
-    expect(inputElement.value).toBe("");
-    fireEvent.change(inputElement, { target: { value: "test" } });
-    expect(inputElement.value).toBe("test");
+  fireEvent.change(inputElement, { target: { value: "test" } });
+  fireEvent.click(buttonElement);
+
+  // Wait for the data to be rendered
+  await waitFor(() => {
+    const wordElement = screen.getByText("test");
+    expect(wordElement).toBeInTheDocument();
   });
 });
 
-describe("something truthy and falsy", () => {
-  it("true to be true", () => {
-    expect(true).toBe(true);
-  });
+test("shows an error message if no word is typed", () => {
+  render(<Dictionary />);
+  const buttonElement = screen.getByText("Search");
+  fireEvent.click(buttonElement);
 
-  it("false to be false", () => {
-    expect(false).toBe(false);
-  });
+  const errorElement = screen.getByText("Failed to fetch definition");
+  expect(errorElement).toBeInTheDocument();
+});
+
+test("renders audio file if available", () => {
+  // Mock the API response to include an audio file
+  // ...
+
+  render(<Dictionary />);
+
+  const inputElement = screen.getByPlaceholderText("Enter a word");
+  const buttonElement = screen.getByText("Search");
+
+  fireEvent.change(inputElement, { target: { value: "test" } });
+  fireEvent.click(buttonElement);
+
+  // Add assertions for the audio element
+  const audioElement = screen.getByRole("audio");
+  expect(audioElement).toBeInTheDocument();
 });

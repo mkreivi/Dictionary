@@ -21,14 +21,37 @@ function Dictionary() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        padding: "20px",
+        fontSize: "16px",
+      }}
+    >
       <input
         type="text"
         placeholder="Enter a word"
         value={word}
         onChange={handleInputChange}
+        style={{
+          padding: "10px",
+          fontSize: "16px",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          marginRight: "10px",
+        }}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button
+        onClick={handleSearch}
+        style={{
+          padding: "10px",
+          fontSize: "16px",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          marginRight: "10px",
+        }}
+      >
+        Search
+      </button>
       {error && <div style={{ color: "red" }}>{error}</div>}
 
       {wordData && (
