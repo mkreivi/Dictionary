@@ -27,9 +27,16 @@ test("fetches data when the button is clicked", async () => {
   fireEvent.click(buttonElement);
 
   // Wait for the data to be rendered
-
   const wordElement = await screen.findByText("test");
   expect(wordElement).toBeInTheDocument();
+
+  // Test the API response: first meaning's part of speech
+  const partOfSpeechElement = await screen.findByText("noun");
+  expect(partOfSpeechElement).toBeInTheDocument();
+
+  // Test the API response: first meaning's first definition
+  const definitionElement = await screen.findByText("A challenge, trial.");
+  expect(definitionElement).toBeInTheDocument();
 });
 
 test("shows an error message if no word is typed", async () => {
