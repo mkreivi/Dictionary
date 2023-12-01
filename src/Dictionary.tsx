@@ -62,16 +62,27 @@ function Dictionary() {
               <div key={index}>
                 {phonetic.text && <p>{phonetic.text}</p>}
                 {phonetic.audio && (
-                  <audio controls>
-                    <source src={phonetic.audio} type="audio/mpeg" />
-                  </audio>
+                  <audio
+                    controls
+                    data-testid="audio-element"
+                    src={phonetic.audio}
+                  />
                 )}
               </div>
             ))}
 
           {wordData.meanings &&
             wordData.meanings.slice(0, 5).map((meaning: any, index: number) => (
-              <div key={index}>
+              <div
+                key={index}
+                style={{
+                  padding: "10px",
+                  margin: "10px 0",
+                  fontSize: "16px",
+                  border: "1px solid #d3b6b6",
+                  borderRadius: "5px",
+                }}
+              >
                 <h3>{meaning.partOfSpeech}</h3>
                 {meaning.definitions &&
                   meaning.definitions

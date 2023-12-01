@@ -7,6 +7,15 @@ test("renders input field", () => {
   expect(inputElement).toBeInTheDocument();
 });
 
+test("captures input value", () => {
+  render(<Dictionary />);
+  const inputElement = screen.getByPlaceholderText(
+    "Enter a word"
+  ) as HTMLInputElement;
+  fireEvent.change(inputElement, { target: { value: "test" } });
+  expect(inputElement.value).toBe("test");
+});
+
 test("fetches data when the button is clicked", async () => {
   render(<Dictionary />);
   const inputElement = screen.getByPlaceholderText("Enter a word");
@@ -22,19 +31,18 @@ test("fetches data when the button is clicked", async () => {
   });
 });
 
-test("shows an error message if no word is typed", () => {
+test("shows an error message if no word is typed", async () => {
   render(<Dictionary />);
   const buttonElement = screen.getByText("Search");
   fireEvent.click(buttonElement);
 
-  const errorElement = screen.getByText("Failed to fetch definition");
-  expect(errorElement).toBeInTheDocument();
+  await waitFor(() => {
+    const errorElement = screen.getByText(/failed to fetch definition/i);
+    expect(errorElement).toBeInTheDocument();
+  });
 });
 
-test("renders audio file if available", () => {
-  // Mock the API response to include an audio file
-  // ...
-
+test("renders audio file if available", async () => {
   render(<Dictionary />);
 
   const inputElement = screen.getByPlaceholderText("Enter a word");
@@ -43,7 +51,8 @@ test("renders audio file if available", () => {
   fireEvent.change(inputElement, { target: { value: "test" } });
   fireEvent.click(buttonElement);
 
-  // Add assertions for the audio element
-  const audioElement = screen.getByRole("audio");
-  expect(audioElement).toBeInTheDocument();
+  await waitFor(() => {
+    const audioElement = screen.getAllByTestId("audio-element");
+    expect(audioElement).toBeInTheDocument();
+  });
 });
