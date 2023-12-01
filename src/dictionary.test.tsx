@@ -53,6 +53,6 @@ test("renders audio file if available", async () => {
 
   await waitFor(() => {
     const audioElement = screen.getAllByTestId("audio-element");
-    expect(audioElement).toBeInTheDocument();
+    expect(audioElement).toHaveLength(2);
   });
 });

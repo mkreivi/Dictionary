@@ -79,7 +79,7 @@ function Dictionary() {
                   padding: "10px",
                   margin: "10px 0",
                   fontSize: "16px",
-                  border: "1px solid #d3b6b6",
+                  border: "3px solid #d3b6b6",
                   borderRadius: "5px",
                 }}
               >
