@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Dictionary from "./Dictionary";
 
+//Test to check if the input field is rendered
 test("renders input field", () => {
   render(<Dictionary />);
   const inputElement = screen.getByPlaceholderText("Enter a word");
@@ -36,6 +37,8 @@ test("shows an error message if no word is typed", async () => {
   const buttonElement = screen.getByText("Search");
   fireEvent.click(buttonElement);
 
+  //Wait for the error message to be rendered
+
   await waitFor(() => {
     const errorElement = screen.getByText(/failed to fetch definition/i);
     expect(errorElement).toBeInTheDocument();
@@ -51,6 +54,7 @@ test("renders audio file if available", async () => {
   fireEvent.change(inputElement, { target: { value: "test" } });
   fireEvent.click(buttonElement);
 
+  // Wait for the audio element to be rendered
   await waitFor(() => {
     const audioElement = screen.getAllByTestId("audio-element");
     expect(audioElement).toHaveLength(2);
