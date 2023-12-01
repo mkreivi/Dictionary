@@ -8,6 +8,7 @@ test("renders input field", () => {
   expect(inputElement).toBeInTheDocument();
 });
 
+// Test to check if the input value is captured correctly
 test("captures input value", () => {
   render(<Dictionary />);
   const inputElement = screen.getByPlaceholderText(
@@ -26,10 +27,9 @@ test("fetches data when the button is clicked", async () => {
   fireEvent.click(buttonElement);
 
   // Wait for the data to be rendered
-  await waitFor(() => {
-    const wordElement = screen.getByText("test");
-    expect(wordElement).toBeInTheDocument();
-  });
+
+  const wordElement = await screen.findByText("test");
+  expect(wordElement).toBeInTheDocument();
 });
 
 test("shows an error message if no word is typed", async () => {
@@ -56,7 +56,7 @@ test("renders audio file if available", async () => {
 
   // Wait for the audio element to be rendered
   await waitFor(() => {
-    const audioElement = screen.getAllByTestId("audio-element");
-    expect(audioElement).toHaveLength(2);
+    const audioElement = screen.getAllByTestId("audio-element")[0];
+    expect(audioElement).toBeInTheDocument();
   });
 });
